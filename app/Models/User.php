@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    // public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -45,5 +46,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+
+    public function setEmailAttribute($val)
+    {
+        $this->attributes['email'] = strtolower($val);
     }
 }

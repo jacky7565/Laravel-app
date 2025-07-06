@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Helpers\TextHelper;
 use App\Mail\WelcomeEmail;
 use App\Events\UserRegistationEvent;
+use App\Models\User;
 
 class ContactController extends Controller
 {
@@ -24,7 +25,7 @@ class ContactController extends Controller
 
 
         $search = $request->input('search');
-        $query = Contact::query();
+        $query = User::query();
         if (!empty($search)) {
             $query->where('name', 'like', "%{$search}%");
             $query->orWhere('email', 'like', "%{$search}%");
@@ -62,7 +63,7 @@ class ContactController extends Controller
         if ($request->hasFile('image')) {
             $fileName = $request->file('image')->store('contact', 'public');
         }
-        $result=Contact::create([
+        $result=User::create([
             'name' => $vali['name'],
             'email' => $vali['email'],
             'password' => bcrypt($vali['password']),
@@ -78,7 +79,7 @@ class ContactController extends Controller
     {
 
 
-        $fetch = Contact::findorFail($id);
+        $fetch = User::findorFail($id);
         $data['result'] = $fetch;
         return view('/edit', $data);
     }
@@ -91,7 +92,7 @@ class ContactController extends Controller
 
         ];
 
-        $fetch = Contact::findorFail($id);
+        $fetch = User::findorFail($id);
         // return $request;
         if ($request->hasFile('image')) {
             $rule = ['image' => 'mimes:jpeg,png.jpg|max:2048'];
@@ -107,7 +108,7 @@ class ContactController extends Controller
 
     public function destroy($id)
     {
-        $contact = Contact::findorFail($id);
+        $contact = User::findorFail($id);
         $contact->delete();
 
         return redirect('/')->with('success', "contact delete successfully");

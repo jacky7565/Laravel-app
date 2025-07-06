@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrap();
+
+    //       $this->middleware(function () {
+    //     Route::aliasMiddleware('auth.check', \App\Http\Middleware\AuthCheck::class);
+    // });
         //
     }
 }

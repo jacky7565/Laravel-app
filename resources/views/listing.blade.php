@@ -1,89 +1,3 @@
-{{-- <!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-</head>
-
-<body>
-    <section class="vh-100" style="background-color: #eee;">
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <a href="/create"> <button type="button" class="btn btn-secondary">Add</button></a>
-
-        <div class="input-group">
-            <form method="get" action="{{ url('/') }}">
-                <div class="form-outline" data-mdb-input-init>
-                    <input type="search" name="search" id="form1" value="{{ request('search') }}"
-                        class="form-control" placeholder="Search Name" />
-                    <label class="form-label" for="form1">Search</label>
-                </div>
-                <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
-                    Search
-                </button>
-            </form>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Profile</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                @foreach ($result as $key => $val)
-                    <tr>
-                        <th scope="row">{{ $key + 1 }}</th>
-                        <td>{{ $val->name }}</td>
-                        <td>{{ $val->email }}</td>
-
-                        <td width="20%"><img src="{{ asset('storage/' . $val->image) }}" width="20%">
-                        </td>
-                        <td><a href="/edit/{{ $val->id }}" class="btn btn-info">Edit</a></td>
-                        <td>
-                            <form action="{{ route('contact.destroy', $val->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('Are You sure ?')"
-                                    class="btn btn-danger">Delete</button>
-                        </td>
-                        </form>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div>{{ $result->links() }}</div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-
-
-</body>
-
-</html>
-
-
-
- --}}
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -144,18 +58,23 @@
                         <a href="#">Cities</a>
                     </li>
                 </ul>
-                <button class="btn logout-btn w-100 mt-4">Log Out</button>
+              <a href="/logout">  <button class="btn logout-btn w-100 mt-4">Log Out</button></a>
             </nav>
 
             <!-- Main content -->
             <main class="col-md-10 ms-sm-auto px-md-4 py-4">
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Welcome back, Jane</h2>
+                    @if (Auth::check())
+                        <h2>Welcome , {{ Auth::user()->name }}</h2>
+                    @endif
+
                     <div class="d-flex align-items-center gap-3">
                         <button class="btn btn-light">⚙️</button>
                         <button class="btn btn-light">🔔</button>
-                        <img src="https://i.pravatar.cc/40" class="rounded-circle" alt="Avatar">
+
+                        <img style="width:50px" src="{{ asset('storage/' . Auth::user()->image) }}" class="rounded-circle"
+                            alt="Avatar">
                     </div>
                 </div>
                 @if (session('success'))
@@ -184,8 +103,8 @@
 
 
                             <div class="col-md-6 text-end ">
-                                 <a href="/"> <button type="button" class="btn btn-secondary">Reset</button></a>
-                                 <a href="/create"> <button type="button" class="btn btn-secondary">Add</button></a>
+                                <a href="/"> <button type="button" class="btn btn-secondary">Reset</button></a>
+                                <a href="/create"> <button type="button" class="btn btn-secondary">Add</button></a>
                             </div>
                         </div>
 

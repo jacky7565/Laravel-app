@@ -10,17 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Contact;
+use App\Models\User;
 
 class UserRegistationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $contact;
+    public $user;
     /**
      * Create a new event instance.
      */
-    public function __construct(Contact $contact)
+    public function __construct(User $user)
     {
-        $this->contact = $contact;
+        $this->user = $user;
     }
 
     /**
