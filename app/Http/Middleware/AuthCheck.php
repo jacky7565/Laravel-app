@@ -18,6 +18,12 @@ class AuthCheck
      */
     public function handle(Request $request, Closure $next)
     {
+
+         if ($request->is('api/*')) {
+            return $next($request);
+        }
+
+
         if (!Auth::check()) {
             return redirect('/login');
         }
