@@ -21,3 +21,7 @@ Route::delete('/delete/{id}',[ContactController::class,'destroy'])->name('contac
 Route::get('/login',[AuthController::class,'login']);
 Route::post('/auth',[AuthController::class,'checkAuth']);
 Route::get('/logout',[AuthController::class,'logOut']);
+
+Route::get('products-list',function(){
+    return view('productList');
+});

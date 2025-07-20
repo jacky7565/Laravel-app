@@ -38,7 +38,9 @@ class ProductController extends Controller
                 'discription' => 'nullable|string',
                 'price' => 'required|numeric|min:0'
             ]);
-            Product::create($val);
+            Product::create($request->only([
+                'name', 'discription', 'price', 'image', 'status'
+            ]));
 
             return response()->json(['message' => 'Product created successfully', 'data' => $val], 201);
         } catch (validationException $e) {
@@ -64,7 +66,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
+// return $request;
         $product = Product::find((int) $id);
 
         if (!$product) {
@@ -77,9 +79,13 @@ class ProductController extends Controller
                 'discription' => 'nullable|string',
                 'price' => 'sometimes|numeric|min:0'
             ]);
-            $product->update($valid);
+           $res= $product->update($request->only([
+                'name', 'discription', 'price', 'image', 'status'
+           ]));
+              if($res){
 
-            return response()->json(['message' => 'Product updated successfully', 'data' => $product], 200);
+                  return response()->json(['message' => 'Product updated successfully', 'data' => $product], 200);
+              }
         } catch (ValidationException $e) {
             return response()->json(['error' => 'Invalid input', 'details' => $e->errors()], 422);
         }
