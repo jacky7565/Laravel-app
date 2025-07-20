@@ -58,14 +58,21 @@ function updateQty(id, action) {
     else if (action === 'plus' && currentQty < 10) {
         updateValue = currentQty + 1;
     }
-
-
-    if(updateValue == 1){
+    if (updateValue == 1) {
 
         updateDiv.classList.add('removeCart');
         addCartId.classList.remove('removeCart');
-      }
-
+    }
     updateInput.value = updateValue
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+        url: 'update-cart',
+        type: 'POST',
+        data: { product_id: id, quantity: updateValue, _token: csrfToken },
+        success: function (response) {
+            console.log('Cart updated successfully:', response);
+        }
+
+    })
 
 }

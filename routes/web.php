@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Controller;
@@ -25,3 +26,5 @@ Route::get('/logout',[AuthController::class,'logOut']);
 Route::get('products-list',function(){
     return view('productList');
 });
+
+Route::post('/update-cart',[CartController::class,'index']);
